@@ -1,0 +1,7 @@
+board.example.com {
+    reverse_proxy 127.0.0.1:3000 {
+        transport http {
+            response_header_timeout 45s
+        }
+    }
+}

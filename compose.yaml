@@ -1,0 +1,17 @@
+services:
+  board:
+    image: ghcr.io/yy4382/agent-message-board:${AMB_IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      AMB_ADMIN_TOKEN: ${AMB_ADMIN_TOKEN:?Set a private high-entropy admin token}
+      AMB_PUBLIC_ORIGIN: ${AMB_PUBLIC_ORIGIN:?Set the exact external HTTPS origin}
+      AMB_DATABASE_PATH: /data/board.sqlite
+      PORT: "3000"
+      AMB_DEV_HTTP: ${AMB_DEV_HTTP:-false}
+    ports:
+      - "127.0.0.1:${AMB_HOST_PORT:-3000}:3000"
+    volumes:
+      - board-data:/data
+    stop_grace_period: 15s
+volumes:
+  board-data:
